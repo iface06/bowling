@@ -114,14 +114,14 @@ public class GameTest {
         assertEquals(25+15+5, bowling.score().intValue());
     }
     
-//    @Test
-//    public void testPerfectGame() {
-//        Game bowling = new Game();
-//
-//        for (int rollCounter = 0; rollCounter < PERFECT_GAME_ROLE_COUNT; rollCounter++) {
-//            bowling.roll(STRIKE);
-//        }
-//
-//        assertEquals(300, bowling.score().intValue());
-//    }
+    @Test
+    public void testPerfectGame() {
+        Game bowling = new Game();
+
+        for (int rollCounter = 0; rollCounter < PERFECT_GAME_ROLE_COUNT; rollCounter++) {
+            bowling.roll(STRIKE);
+        }
+
+        assertEquals(300, bowling.score().intValue());
+    }
 }

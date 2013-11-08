@@ -20,9 +20,10 @@ public class Game {
         for (int i = 0; i < rolls.size(); i += 2) {
             Integer score = rolls.get(i);
             Integer frameScore = score +  getRoll(i + 1);
-
+            
             if (isStrike(score)) {
-                sum += frameScore + getRoll(i + 2) + getRoll(i + 3);
+                Integer nextScore = getRoll(i + 2);
+                sum += frameScore + nextScore + getOverNextScore(i);
             } else if (isSpare(frameScore)) {
                 sum += frameScore + getRoll(i + 2);
             } else {
@@ -46,5 +47,9 @@ public class Game {
 
     private boolean isStrike(Integer score) {
         return score == MAX_PINS;
+    }
+
+    private Integer getOverNextScore(int i) {
+        return isStrike(getRoll(i + 2)) ? getRoll(i + 4) : getRoll(i + 3);
     }
 }
