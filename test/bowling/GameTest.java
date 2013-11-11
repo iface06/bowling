@@ -3,8 +3,10 @@ package bowling;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
 public class GameTest {
-    public static final int PERFECT_GAME_ROLE_COUNT = 12;
+    public static final int NORMALIZED_PERFECT_GAME_ROLE_COUNT = 12;
+    public static final int NORMAL_GAME_ROLE_COUNT = 22;
     public static final int STRIKE = 10;
 
     @Test
@@ -118,10 +120,91 @@ public class GameTest {
     public void testPerfectGame() {
         Game bowling = new Game();
 
-        for (int rollCounter = 0; rollCounter < PERFECT_GAME_ROLE_COUNT; rollCounter++) {
+        for (int rollCounter = 0; rollCounter < NORMALIZED_PERFECT_GAME_ROLE_COUNT; rollCounter++) {
             bowling.roll(STRIKE);
         }
 
         assertEquals(300, bowling.score().intValue());
+    }
+    
+    @Test
+    public void testSpareFinish() {
+        Game bowling = new Game();
+
+        for (int rollCounter = 0; rollCounter < 18; rollCounter++) {
+            bowling.roll(rollCounter % 10);
+        }
+        bowling.roll(5);
+        bowling.roll(5);
+        bowling.roll(3);
+        
+
+        assertEquals(86, bowling.score().intValue());
+    }
+    
+    @Test
+    public void testWeakFinish() {
+        Game bowling = new Game();
+
+        for (int rollCounter = 0; rollCounter < 18; rollCounter++) {
+            bowling.roll(rollCounter % 10);
+        }
+        bowling.roll(5);
+        bowling.roll(3);
+
+        assertEquals(81, bowling.score().intValue());
+    }
+    
+    @Test
+    public void testRandomGame() {
+        Game bowling = new Game();
+
+        bowling.roll(5);
+        bowling.roll(3); // 8
+        
+        bowling.roll(10); // 28
+        
+        bowling.roll(6); 
+        bowling.roll(4); // 44
+        
+        bowling.roll(6);
+        bowling.roll(2); // 52
+        
+        bowling.roll(7);
+        bowling.roll(0); // 59
+        
+        bowling.roll(1);
+        bowling.roll(4); // 64
+        
+        bowling.roll(4);
+        bowling.roll(1); // 69
+        
+        bowling.roll(0);
+        bowling.roll(0); // 69
+        
+        bowling.roll(7);
+        bowling.roll(3); // 81
+        
+        bowling.roll(2);
+        bowling.roll(2); // 85
+        
+        assertEquals(85, bowling.score().intValue());
+    }
+    
+    @Test
+    public void testWeakGame() {
+        Game bowling = new Game();
+
+        for (int rollCounter = 0; rollCounter < NORMAL_GAME_ROLE_COUNT; rollCounter++) {
+            bowling.roll(0);
+        }
+        assertEquals(0, bowling.score().intValue());
+    }
+    
+    @Test(expected = Game.InvalidScoreException.class)
+    public void testInvalidScoreException(){
+        Game bowling = new Game();
+        bowling.roll(-1);
+        fail();
     }
 }
