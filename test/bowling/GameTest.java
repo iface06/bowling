@@ -201,7 +201,7 @@ public class GameTest {
         assertEquals(0, bowling.score().intValue());
     }
     
-    @Test(expected = Game.InvalidScoreException.class)
+    @Test(expected = InvalidScoreException.class)
     public void testInvalidScoreException(){
         Game bowling = new Game();
         bowling.roll(-1);
